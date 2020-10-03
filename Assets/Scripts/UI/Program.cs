@@ -76,7 +76,6 @@ public class Program : MonoBehaviour
     }
 
     public void launchProgram() {
-        Debug.LogWarning("Program Launched");
 
         foreach(GameObject command in addedCommends) {
             player.GetComponent<CommandSystem>().commands.Add(command.transform.GetComponent<DragDrop>().commandTypeId);

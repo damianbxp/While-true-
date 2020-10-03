@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CommandSystem : MonoBehaviour
 {
+    public ComandPrompt cmd;
+
     private Movement movement;
     //public string[] commands;
     public List<int> commands = new List<int>();
@@ -49,12 +51,20 @@ public class CommandSystem : MonoBehaviour
         if(currentCommand < commands.Count - 1) currentCommand++;
         else {
             currentCommand = 0;
+            Debug.LogWarning("Loop Finished");
         }
     }
 
     public void launchProgram() {
-        programDone = false;
-        commandDone = true;
+        if(cmd.processCode()) {
+            if(commands.Count > 0) {
+                Debug.LogWarning("Program Launched");
+                programDone = false;
+                commandDone = true;
+            } else {
+                Debug.LogWarning("No functions to execute");
+            }
+        }
     }
 
     public void stopProgram() {
