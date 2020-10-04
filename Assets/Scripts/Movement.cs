@@ -5,10 +5,11 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     public float moveSpeed;
     public float rotateSpeed;
-    private Vector3 movePoint;
+    public Vector3 movePoint;
     public float tileSize = 2f;
 
     public LayerMask stopMovement;
+    public LayerMask Function;
 
     private int targetRotation = 0;
     private float rotateDirection = 0;
@@ -47,7 +48,8 @@ public class Movement : MonoBehaviour {
 
     public void MoveForward() {
 
-        if(Physics.OverlapSphere(movePoint + transform.forward * tileSize, 0.2f, stopMovement).Length > 0) {
+        if(Physics.OverlapSphere(movePoint + transform.forward * tileSize, 0.2f, stopMovement).Length > 0 ||
+            Physics.OverlapSphere(movePoint + transform.forward * tileSize, 0.2f, Function).Length > 0) {
             //Debug.LogWarning("Hitted sth");
             commandSystem.finishCommand();
         } else {

@@ -7,14 +7,17 @@ public class CommandSystem : MonoBehaviour
     public ComandPrompt cmd;
 
     private Movement movement;
-    //public string[] commands;
+    private Functions functions;
     public List<int> commands = new List<int>();
     private bool commandDone = false;
     private bool programDone = true;
     private int currentCommand = 0;
 
+
     private void Start() {
         movement = GetComponent<Movement>();
+        functions = GetComponent<Functions>();
+
     }
 
     private void Update() {
@@ -25,8 +28,13 @@ public class CommandSystem : MonoBehaviour
     }
 
     void runNextCommand() {
-        //Debug.Log("Executing comand: " + currentCommand);
-        switch(commands[currentCommand]) {
+        pickCommand(commands[currentCommand]);
+    }
+
+    void pickCommand(int commandId) {
+        //Debug.Log("Executing comand: " + commandId);
+
+        switch(commandId) {
             case 0: {//forward
                 movement.MoveForward();
                 break;
@@ -37,6 +45,30 @@ public class CommandSystem : MonoBehaviour
             }
             case 2: {//left
                 movement.Rotate(-1);
+                break;
+            }
+            case 3: {//store buffor
+                if(functions.storeBuffor()) {
+                    finishCommand();
+                } else {
+                    cmd.printToConsole("Nothing to pick up", Color.yellow);
+                    finishCommand();
+                }
+                break;
+            }
+            case 4: {//execute bufor
+                int buffor = functions.executeBuffor();
+                if(buffor == -1) {
+                    cmd.printToConsole("Buffor is empty", Color.yellow);
+                    finishCommand();
+                } else {
+                    pickCommand(buffor);
+                }
+                break;
+            }
+            case 5: { // break
+                stopProgram();
+                LevelCompleted();
                 break;
             }
             default: {
@@ -71,5 +103,8 @@ public class CommandSystem : MonoBehaviour
         programDone = true;
         commands.Clear();
         Debug.LogWarning("Program Done");
+    }
+    
+    void LevelCompleted() {
     }
 }
