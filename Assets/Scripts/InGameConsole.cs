@@ -45,19 +45,19 @@ public class InGameConsole : MonoBehaviour {
                 consoleText.text = "exit\t\t\texit program\n" +
                 "run\t\t\trun your code\n" +
                 "stop\t\t\tstops running program\n" +
-                "reload\t\t\treloads level\n" +
+                "reload\t\treloads level\n" +
                 "menu\t\t\tloads main menu\n" +
-                "commands\t\t\tdisplays available commands\n" +
+                "commands\t\tdisplays available commands\n" +
                 "help\t\t\tdisplays this help";
                 inputField.text = "";
                 break;
             }
             case "commands": {
                 consoleText.text = "moveForward();\t\tmove forward one tile\n" +
-                    "turnLeft();\t\tturn left" +
-                    "turnRight();\t\tturn right" +
-                    "store();\t\tsore function in buffor" +
-                    "exec();\t\trun stored function";
+                    "turnLeft();\t\t\tturn left\n" +
+                    "turnRight();\t\t\tturn right\n" +
+                    "store();\t\t\tstore function in buffor\n" +
+                    "exec();\t\t\trun stored function";
                 inputField.text = "";
                 break;
             }
@@ -91,7 +91,7 @@ public class InGameConsole : MonoBehaviour {
                 break;
             }
             default: {
-                consoleText.text = "Unknown Command: '" + command + "'";
+                consoleText.text = "Unknown Command: '" + command + "'"+ "\ntype 'help' for help";
                 inputField.text = "";
                 break;
             }

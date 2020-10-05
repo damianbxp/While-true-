@@ -19,8 +19,8 @@ public class LevelManager : MonoBehaviour
     }
 
     public void LoadNextLevel() {
-        if(currentScene < scenes.Length) {
-            LoadLevel(currentScene);
+        if(currentScene + 1 < scenes.Length) {
+            LoadLevel(currentScene + 1);
         } else {
             LoadLevel(0);
         }

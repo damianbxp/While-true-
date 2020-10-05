@@ -13,6 +13,7 @@ public class CommandSystem : MonoBehaviour
     private bool commandDone = false;
     private bool programDone = true;
     private int currentCommand = 0;
+    public bool resetRobot = false;
 
 
     private void Start() {
@@ -24,7 +25,11 @@ public class CommandSystem : MonoBehaviour
     private void Update() {
         if(commandDone) {
             commandDone = false;
+            
             if(!programDone) runNextCommand();
+            else {
+                if(resetRobot) resetProgram();
+            }
         }
     }
 
@@ -86,6 +91,7 @@ public class CommandSystem : MonoBehaviour
             currentCommand = 0;
             Debug.LogWarning("Loop Finished");
         }
+
     }
 
     public void launchProgram() {
@@ -102,8 +108,17 @@ public class CommandSystem : MonoBehaviour
 
     public void stopProgram() {
         programDone = true;
-        commands.Clear();
         Debug.LogWarning("Program Done");
+    }
+
+    public void resetProgram() {
+        programDone = true;
+        commands.Clear();
+        transform.position = new Vector3(1, 0, -1);
+        transform.rotation = Quaternion.identity;
+        resetRobot = false;
+        currentCommand = 0;
+        commandDone = false;
     }
     
     void LevelCompleted() {

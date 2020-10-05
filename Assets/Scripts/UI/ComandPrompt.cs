@@ -15,6 +15,9 @@ public class ComandPrompt : MonoBehaviour
     public TextMeshProUGUI linesCountText;
     public TMP_InputField inputField;
 
+    public AudioSource audioSource;
+    public AudioClip audioClip;
+
     private void Start() {
         commandSystem = transform.GetComponent<CommandSystem>();
         inputField.Select();
@@ -83,6 +86,10 @@ public class ComandPrompt : MonoBehaviour
     }
 
     public void printToConsole(string text, Color color) {
+        if(color == Color.red) {
+            audioSource.volume = 0.4f;
+            audioSource.PlayOneShot(audioClip);
+        }
         errorText.color = color;
         errorText.text = text;
     }

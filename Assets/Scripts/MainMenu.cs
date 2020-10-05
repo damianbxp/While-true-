@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     public LevelManager levelManager;
     public TMP_InputField inputField;
 
+
+
     int menuLine = 0;
     string[] menuLines = {
         "Rebooting",
@@ -52,7 +54,6 @@ public class MainMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
 
-
         /*Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;*/
     }
@@ -81,10 +82,18 @@ public class MainMenu : MonoBehaviour
         startTextLoading = false;
         switch(command) {
             case "help": {
-                menuText.text = "exit\t\t\t\texit program\n" +
+                menuText.text = "About game:\n" +
+                    "Someone placed infinite loop in robot operating system.\nYour job is to fix that.\nYou have to get 'break;' function to break loop.\n" +
+                    "First you need to get to function, then grab it and finaly execute\n" +
+                    "\n on left you will have program to modify (remember that you are in infinite loop)" +
+                    "\n lines you wrote are limited (shown on left bottom)" +
+                    "\n\non right you will have console to run robot" +
+                    "\n\n robot can't go through objects (he will dismiss command)" +
+                "\nexit\t\t\t\texit program\n" +
                 "start\t\t\t\tstart game\n" +
-                "load <level>\t\t\tloads level specified in <level>" +
-                "help\t\t\tdisplays this help";
+                "load <level>\t\t\tloads level specified in <level>\n" +
+                "credits\t\t\tdisplays credits\n" +
+                "help\t\t\t\tdisplays this help";
                 consoleText.text = "";
                 break;
             }
@@ -92,6 +101,15 @@ public class MainMenu : MonoBehaviour
                 // loading level 1
                 Debug.Log("Loading level 1");
                 levelManager.LoadLevel(1);
+                break;
+            }
+            case "credits": {
+                menuText.text = "Game created for Ludum Dare 47 by Damian Bartuś" +
+                    "\n\n\nAudio source - Freesound:\n" +
+                    "Sci-fi Laboratory Ambience by Iwan Gabovitch under CC-BY 3.0 License with sounds by wolick, swiftoid, Diboz\n" +
+                    "squashy555\n" +
+                    "Autistic Lucario\n";
+                consoleText.text = "";
                 break;
             }
             case "exit": {
@@ -122,7 +140,7 @@ public class MainMenu : MonoBehaviour
                     } else {
                     }
                 } else {
-                    menuText.text = "Unknown Command: '" + command + "'";
+                    menuText.text = "Unknown Command: '" + command + "'" + "\ntype 'help' for help";
                 }
                 break;
             }
