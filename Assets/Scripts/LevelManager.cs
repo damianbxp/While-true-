@@ -9,6 +9,9 @@ public class LevelManager : MonoBehaviour
     public string[] scenes;
     int currentScene;
 
+    private void Start() {
+        currentScene = Array.IndexOf(scenes, SceneManager.GetActiveScene().name);
+    }
 
     public void LoadLevel(int sceneId) {
         currentScene = sceneId;

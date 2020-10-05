@@ -10,8 +10,32 @@ public class InGameConsole : MonoBehaviour {
     public CommandSystem commandSystem;
     public LevelManager levelManager;
 
-    public void processCommand(string command) {
+    string[] startText = {
+        "Infinite loop detected\n",
+        "Initializing self-repair", ".", ".", ".",
+        "\tFAILED\n",
+        "Manual fix required\n",
+        "type 'help' for additional information"
+    };
+    bool startTextLoading = true;
+    int consoleLoadLine = 0;
+    float lastTime;
+    public float minLogTime = 0.5f;
+    public float maxLogTime = 1f;
+    float delayTime = 0.5f;
 
+    public bool levelFinished = false;
+
+    private void Start() {
+        lastTime = Time.time;
+    }
+
+    private void Update() {
+        if(startTextLoading) consoleStartText();
+    }
+
+    public void processCommand(string command) {
+        startTextLoading = false;
         switch(command) {
             case "exit": {
                 Application.Quit();
@@ -23,7 +47,17 @@ public class InGameConsole : MonoBehaviour {
                 "stop\t\t\tstops running program\n" +
                 "reload\t\t\treloads level\n" +
                 "menu\t\t\tloads main menu\n" +
+                "commands\t\t\tdisplays available commands\n" +
                 "help\t\t\tdisplays this help";
+                inputField.text = "";
+                break;
+            }
+            case "commands": {
+                consoleText.text = "moveForward();\t\tmove forward one tile\n" +
+                    "turnLeft();\t\tturn left" +
+                    "turnRight();\t\tturn right" +
+                    "store();\t\tsore function in buffor" +
+                    "exec();\t\trun stored function";
                 inputField.text = "";
                 break;
             }
@@ -47,6 +81,15 @@ public class InGameConsole : MonoBehaviour {
                 levelManager.LoadLevel(0);
                 break;
             }
+            case "next": {
+                if(levelFinished) {
+                    levelManager.LoadNextLevel();
+                } else {
+                    consoleText.text = "Command execution failed";
+                    inputField.text = "";
+                }
+                break;
+            }
             default: {
                 consoleText.text = "Unknown Command: '" + command + "'";
                 inputField.text = "";
@@ -55,4 +98,18 @@ public class InGameConsole : MonoBehaviour {
         }
     }
 
+    void consoleStartText() {
+        if(Time.time - lastTime > delayTime) {
+            if(consoleLoadLine > startText.Length - 1) {
+                startTextLoading = false;
+            } else {
+                consoleText.text += startText[consoleLoadLine];
+                consoleLoadLine++;
+                lastTime = Time.time;
+                delayTime = Random.Range(minLogTime, maxLogTime);
+            }
+
+
+        }
+    }
 }

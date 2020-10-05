@@ -5,6 +5,7 @@ using UnityEngine;
 public class CommandSystem : MonoBehaviour
 {
     public ComandPrompt cmd;
+    public InGameConsole inGameConsole;
 
     private Movement movement;
     private Functions functions;
@@ -106,5 +107,7 @@ public class CommandSystem : MonoBehaviour
     }
     
     void LevelCompleted() {
+        inGameConsole.consoleText.text = "loop broken\nproceeding is now possible";
+        inGameConsole.levelFinished = true;
     }
 }
